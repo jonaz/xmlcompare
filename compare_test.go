@@ -73,3 +73,26 @@ func TestNotEqualValue(t *testing.T) {
 	assert.NoError(t, err)
 	assert.False(t, eq)
 }
+
+func TestEmptyTagVsEmptyString(t *testing.T) {
+	eq, err := EqualString(
+		`<?xml version="1.0"?>
+<person id="13">
+  <name>
+    <first>John</first>
+    <last/>
+  </name>
+  <age>42</age>
+</person>`,
+		`<?xml version="1.0"?>
+<person id="13">
+  <name>
+    <first>John</first>
+    <last></last>
+  </name>
+  <age>42</age>
+</person>`,
+	)
+	assert.NoError(t, err)
+	assert.True(t, eq)
+}
